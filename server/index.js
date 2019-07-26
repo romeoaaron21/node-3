@@ -3,6 +3,7 @@ const massive = require('massive');
 const users = require('../controllers/users');
 const posts = require('../controllers/posts');
 const comments = require('../controllers/comments');
+const hash = require('../controllers/hash');
 
 massive({
     host: 'localhost',
@@ -12,7 +13,7 @@ massive({
     password: 'node3db',
 })
 .then(db => {
-    const PORT = 3001;
+    const PORT = 3000;
     const app = express();
 
     app.set('db', db);
@@ -34,6 +35,9 @@ massive({
 
     app.post('/api/comments', comments.create)
     app.patch('/api/updateComments/:id', comments.updateComment)
+
+    app.post('/api/register', hash.register)
+    app.post('/api/login', hash.login)
 
 })
 
